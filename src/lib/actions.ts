@@ -55,9 +55,17 @@ export const deleteTodoByForm = async (data: FormData) => {
 }
 
 // 最終的な CRUD 画面で利用する Todo 追加メソッド
-export const createTodo = async (data: FormData) => {
+export const createTodo = async (prevState: any, data: FormData) => {
   const name = data.get('name') as string
-  await prisma.todo.create({ data: { name } })
+
+  try {
+    // throw new Error('error')
+    await prisma.todo.create({ data: { name } })
+  } catch (error) {
+    return {
+      message: 'Failed to add',
+    }
+  }
 
   revalidatePath('/crud/todos')
   redirect('/crud/todos')
