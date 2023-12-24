@@ -8,6 +8,12 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { z } from 'zod'
+
+// Zod によるバリデーションのためのスキーマを定義
+const schema = z.object({
+  name: z.string().min(2),
+})
 
 export const addTodo = async (data: FormData) => {
   // 関数の第一引数にはフォームデータが含まれる
@@ -57,6 +63,17 @@ export const deleteTodoByForm = async (data: FormData) => {
 // 最終的な CRUD 画面で利用する Todo 追加メソッド
 export const createTodo = async (prevState: any, data: FormData) => {
   const name = data.get('name') as string
+
+  const validatedFields = schema.safeParse({
+    name,
+  })
+  // console.log(JSON.stringify(validatedFields, null, 2))
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    }
+  }
 
   try {
     // throw new Error('error')
