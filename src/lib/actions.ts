@@ -25,3 +25,30 @@ export const addTodoByClient = async (name: string) => {
   // キャッシュしたデータを破棄して、引数で指定したパスをブラウザ上に表示
   revalidatePath('/todos')
 }
+
+// id 直接受け取って Todo を削除
+export const deleteTodo = async (id: number) => {
+  // console.log('delete')
+
+  // 引数で受け取った id の todo を削除
+  await prisma.todo.delete({
+    where: {
+      id,
+    },
+  })
+  revalidatePath('/todos')
+}
+
+// フォームデータから id を受け取って Todo を削除
+export const deleteTodoByForm = async (data: FormData) => {
+  // フォームで受け取ったデータから id を取得
+  const id = data.get('id') as string
+
+  // 取得した ID を数値型に変換して指定
+  await prisma.todo.delete({
+    where: {
+      id: Number(id),
+    },
+  })
+  revalidatePath('/dh-todos')
+}

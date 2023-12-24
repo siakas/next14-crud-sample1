@@ -1,8 +1,7 @@
-import { DeleteByBind } from '@/components/DeleteByBind'
-import { addTodo } from '@/lib/actions'
+import { addTodo, deleteTodoByForm } from '@/lib/actions'
 import prisma from '@/lib/prisma'
 
-const ServerActionsTodosPage = async () => {
+const DeleteButtonActionPages = async () => {
   const todos = await prisma.todo.findMany()
 
   return (
@@ -13,8 +12,16 @@ const ServerActionsTodosPage = async () => {
           <li className="flex items-center gap-4" key={todo.id}>
             <span>{todo.name}</span>
 
-            {/* Server Actions の bind を利用して id を渡す方法 */}
-            <DeleteByBind id={todo.id} />
+            {/* button の formAction に Server Actions を設定するパターン */}
+            <form>
+              <input name="id" type="hidden" value={todo.id} />
+              <button
+                className="rounded-lg bg-red-500 px-2 py-1 text-sm text-white"
+                formAction={deleteTodoByForm}
+              >
+                削除
+              </button>
+            </form>
           </li>
         ))}
       </ul>
@@ -40,4 +47,4 @@ const ServerActionsTodosPage = async () => {
   )
 }
 
-export default ServerActionsTodosPage
+export default DeleteButtonActionPages

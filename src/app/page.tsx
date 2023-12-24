@@ -34,6 +34,18 @@ const Home = async () => {
             Server Component で外部に定義した Server Actions を呼び出すパターン
             <br />
             Server Action はフォームの action 属性に指定
+            <br />
+            Delete は Server Actions の bind を利用
+          </Link>
+        </li>
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/dh-todos">
+            Delete に input:hidden を利用して id を渡すパターン
+          </Link>
+        </li>
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/db-todos">
+            Button の formAction に Server Actions の関数を渡すパターン
           </Link>
         </li>
       </ul>
