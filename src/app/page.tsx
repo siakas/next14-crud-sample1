@@ -48,6 +48,11 @@ const Home = async () => {
             Button の formAction に Server Actions の関数を渡すパターン
           </Link>
         </li>
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/crud/todos">
+            CRUD の機能ごとにページを分割した Todo リスト
+          </Link>
+        </li>
       </ul>
     </div>
   )
