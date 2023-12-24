@@ -4,11 +4,10 @@
 
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { addTodoByClient } from '@/lib/actions'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
-export const Form = () => {
-  const router = useRouter()
+export const FormWithServerActions = () => {
   const [name, setName] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,23 +16,18 @@ export const Form = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await fetch('/api/todos', {
-      body: JSON.stringify({ name }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
+    // Server Actions の関数を呼び出して実行
+    // ここではフォームデータではなく useState の値を受け取れる関数を呼び出している
+    await addTodoByClient(name)
     setName('')
-    router.push('/todos')
   }
 
   return (
     <>
       <p className="mb-2 mt-8">
-        Server Actions を利用せずに useState でフォーム処理をおこなう例
+        client component 内で Server Actions を実行するパターン
         <br />
-        useState の値を fetch で POST
+        useState の値を受け取って Server Actions を実行
       </p>
       <form className="flex items-center" onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>

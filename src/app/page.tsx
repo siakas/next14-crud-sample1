@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import Link from 'next/link'
 
 const Home = async () => {
   const todos = await prisma.todo.findMany()
@@ -10,6 +11,31 @@ const Home = async () => {
         {todos.map((todo) => (
           <li key={todo.id}>{todo.name}</li>
         ))}
+      </ul>
+
+      <ul className="mt-8 space-y-2">
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/todos">
+            Client Component でフォーム処理をおこなうパターン
+            <br />
+            useState の値を fetch で処理するパターンと、useState の値を Server
+            Actions に渡して実行するパターン
+          </Link>
+        </li>
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/s-todos">
+            Server Component 内で Server Actions を定義して実行するパターン
+            <br />
+            Server Action はフォームの action 属性に指定
+          </Link>
+        </li>
+        <li>
+          <Link className="text-blue-600 hover:underline" href="/a-todos">
+            Server Component で外部に定義した Server Actions を呼び出すパターン
+            <br />
+            Server Action はフォームの action 属性に指定
+          </Link>
+        </li>
       </ul>
     </div>
   )
