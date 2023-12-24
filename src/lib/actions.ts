@@ -77,6 +77,7 @@ export const createTodo = async (prevState: any, data: FormData) => {
 
   try {
     // throw new Error('error')
+    await new Promise((resolve) => setTimeout(resolve, 2000)) // ローディング確認のため遅延処理を追加
     await prisma.todo.create({ data: { name } })
   } catch (error) {
     return {

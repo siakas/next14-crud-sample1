@@ -1,7 +1,8 @@
 'use client'
 
+import { SubmitButton } from '@/components/SubmitButton'
 import { createTodo } from '@/lib/actions'
-import { useFormState } from 'react-dom'
+import { useFormState, useFormStatus } from 'react-dom'
 
 const initialState = {
   errors: {},
@@ -9,6 +10,7 @@ const initialState = {
 }
 
 export const CreateTodoByForm = () => {
+  const { pending } = useFormStatus()
   const [state, formAction] = useFormState(createTodo, initialState)
 
   return (
@@ -29,12 +31,18 @@ export const CreateTodoByForm = () => {
           </div>
         ))}
 
-      <button
-        className="rounded-lg bg-blue-600 px-2 py-1 text-sm text-white"
+      {/* useFormStatus を動作させるには別コンポーネント化する必要がある？ */}
+      {/* <button
+        className={clsx(
+          'rounded-lg bg-blue-600 px-2 py-1 text-sm text-white',
+          pending ? 'opacity-50' : '',
+        )}
+        disabled={pending}
         type="submit"
       >
         Add Todo
-      </button>
+      </button> */}
+      <SubmitButton />
     </form>
   )
 }
